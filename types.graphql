@@ -1,0 +1,33 @@
+# The following types define the data model of the example service
+# based on which the GraphQL API is generated
+
+type Influencer @model {
+  id: ID! @isUnique
+  createdAt:DateTime!
+  updatedAt:DateTime!
+  username:String!
+  fullName:String
+  picture:String!
+  biography:String
+  followerCount:Int
+  stats:StatsData @relation(name:"InfluencerStats")
+}
+
+type StatsData @model {
+  id: ID! @isUnique
+  createdAt:DateTime!
+  updatedAt:DateTime!
+  interests:[String!]
+  followerCount:Int
+  influencer:Influencer @relation(name:"InfluencerStats")
+  engagement:EngagementData @relation(name:"InfluencerEngagement")
+}
+type EngagementData @model {
+  id: ID! @isUnique
+  createdAt:DateTime!
+  updatedAt:DateTime!
+  avgCommentsRatio:Float
+  avgLikesRatio:Float
+  stats:StatsData @relation(name:"InfluencerEngagement")
+}
+
